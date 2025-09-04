@@ -1,5 +1,6 @@
 package com.giwankim.raytracing
 
+import io.kotest.assertions.assertSoftly
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 import org.junitpioneer.jupiter.StdIo
@@ -12,11 +13,13 @@ class MainTest {
         main()
 
         out.capturedLines().let { lines ->
-            lines[0] shouldBe "P3"
-            lines[1] shouldBe "256 256"
-            lines[2] shouldBe "255"
-            lines[3] shouldBe "0 0 0"
-            lines.last() shouldBe "255 255 0"
+            assertSoftly {
+                lines[0] shouldBe "P3"
+                lines[1] shouldBe "400 225"
+                lines[2] shouldBe "255"
+                lines[3] shouldBe "163 200 255"
+                lines.last() shouldBe "220 234 255"
+            }
         }
     }
 }

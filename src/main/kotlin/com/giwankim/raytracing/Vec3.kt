@@ -39,16 +39,29 @@ data class Vec3(
         return (1 / t) * Vec3(x, y, z)
     }
 
+    operator fun div(t: Int): Vec3 = this / t.toDouble()
+
     infix fun dot(other: Vec3): Double = x * other.x + y * other.y + z * other.z
 
-    infix fun cross(other: Vec3): Vec3 = Vec3(y * other.z - z * other.y, z * other.x - x * other.z, x * other.y - y * other.x)
+    infix fun cross(other: Vec3): Vec3 =
+        Vec3(
+            y * other.z - z * other.y,
+            z * other.x - x * other.z,
+            x * other.y - y * other.x,
+        )
 
     fun normalized(): Vec3 {
         require(length != 0.0) { "Cannot normalize a zero-length vector" }
         return this / length
     }
+
+    companion object {
+        val ZERO = Vec3(0.0, 0.0, 0.0)
+    }
 }
 
 operator fun Double.times(vec: Vec3): Vec3 = vec * this
+
+operator fun Int.times(vec: Vec3): Vec3 = vec * this.toDouble()
 
 typealias Point3 = Vec3
