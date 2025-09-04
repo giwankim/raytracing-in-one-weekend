@@ -1,9 +1,5 @@
 package com.giwankim.raytracing
 
-import io.github.oshai.kotlinlogging.KotlinLogging
-
-private val logger = KotlinLogging.logger {}
-
 fun main() {
     // Image
     val imageWidth = 256
