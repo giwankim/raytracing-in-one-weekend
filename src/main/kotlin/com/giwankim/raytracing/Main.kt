@@ -39,11 +39,11 @@ fun main() {
             .appendLine("P3")
             .appendLine("$imageWidth $imageHeight")
             .appendLine("255")
-        for (j in 0 until imageHeight) {
+        repeat(imageHeight) { j ->
             System.err.print("\rScanlines remaining: ${imageHeight - j} ")
             System.err.flush()
 
-            for (i in 0 until imageWidth) {
+            repeat(imageWidth) { i ->
                 val pixelCenter = pixel00Loc + (i * pixelDeltaU) + (j * pixelDeltaV)
                 val rayDirection = pixelCenter - cameraCenter
                 val ray = Ray(cameraCenter, rayDirection)

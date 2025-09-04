@@ -36,7 +36,7 @@ data class Vec3(
 
     operator fun div(t: Double): Vec3 {
         require(t != 0.0) { "Cannot divide by zero" }
-        return (1 / t) * Vec3(x, y, z)
+        return (1 / t) * this
     }
 
     operator fun div(t: Int): Vec3 = this / t.toDouble()
