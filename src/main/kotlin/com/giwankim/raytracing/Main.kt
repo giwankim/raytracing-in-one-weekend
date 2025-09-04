@@ -16,7 +16,9 @@ fun main() {
 
         // Render
         for (j in 0 until imageHeight) {
-            logger.info { "Scanlines remaining: ${imageHeight - j}" }
+            System.err.print("\rScanlines remaining: ${imageHeight - j} ")
+            System.err.flush()
+
             for (i in 0 until imageWidth) {
                 val r = i.toDouble() / (imageWidth - 1)
                 val g = j.toDouble() / (imageHeight - 1)
@@ -31,5 +33,5 @@ fun main() {
         }
     }
 
-    logger.info { "Done." }
+    System.err.println("\rDone.                 ")
 }
