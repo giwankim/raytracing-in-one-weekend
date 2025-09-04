@@ -16,6 +16,7 @@ dependencies {
     testImplementation(kotlin("test"))
     testImplementation("io.kotest:kotest-runner-junit5:6.0.2")
     testImplementation("org.junit-pioneer:junit-pioneer:2.3.0")
+    testCompileOnly("org.junit.jupiter:junit-jupiter-params:5.13.4")
 }
 
 kotlin {

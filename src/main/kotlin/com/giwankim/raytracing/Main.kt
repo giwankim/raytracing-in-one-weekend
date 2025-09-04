@@ -48,7 +48,7 @@ fun main() {
                 val rayDirection = pixelCenter - cameraCenter
                 val ray = Ray(cameraCenter, rayDirection)
 
-                val pixelColor = rayColor(ray)
+                val pixelColor = ray.color()
                 pixelColor.write(out)
             }
         }
@@ -57,8 +57,8 @@ fun main() {
     System.err.println("\rDone.                 ")
 }
 
-fun rayColor(ray: Ray): Color {
-    val unitDirection = ray.direction.normalized()
+fun Ray.color(): Color {
+    val unitDirection = direction.normalized()
     val a = 0.5 * (unitDirection.y + 1.0)
     return (1 - a) * Color.WHITE + a * Color.BLUE
 }
