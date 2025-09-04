@@ -17,6 +17,7 @@ dependencies {
     implementation("org.slf4j:slf4j-api:2.0.17")
     runtimeOnly("ch.qos.logback:logback-classic:1.5.18")
     testImplementation(kotlin("test"))
+    testImplementation("io.kotest:kotest-runner-junit5:6.0.2")
 }
 
 kotlin {
