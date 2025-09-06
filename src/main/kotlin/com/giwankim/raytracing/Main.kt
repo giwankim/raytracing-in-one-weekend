@@ -65,14 +65,14 @@ fun hitSphere(
     ray: Ray,
 ): Double {
     val originToCenter = center - ray.origin
-    val a = ray.direction dot ray.direction
-    val b = -2 * (ray.direction dot originToCenter)
-    val c = (originToCenter dot originToCenter) - radius * radius
-    val discriminant = b * b - 4 * a * c
+    val a = ray.direction.lengthSquared()
+    val h = ray.direction dot originToCenter
+    val c = originToCenter.lengthSquared() - radius * radius
+    val discriminant = h * h - a * c
     return if (discriminant < 0) {
         -1.0
     } else {
-        (-b - sqrt(discriminant)) / (2.0 * a)
+        (h - sqrt(discriminant)) / a
     }
 }
 
