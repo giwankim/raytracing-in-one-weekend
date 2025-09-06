@@ -57,7 +57,37 @@ fun main() {
     System.err.println("\rDone.                 ")
 }
 
+/**
+ * Tests whether a ray intersects a sphere.
+ *
+ * Solves the quadratic obtained by substituting the ray `P(t) = origin + t * direction`
+ * into the sphere equation `|P - center|^2 = radius^2` and checks the discriminant.
+ * Returns `true` if the discriminant \> 0 (two intersections). Tangential hits
+ * (discriminant == 0) and misses return `false`. Does not verify that the hit is at `t > 0`.
+ *
+ * @param center Sphere center in world space.
+ * @param radius Sphere radius.
+ * @param ray Ray to test.
+ * @return `true` if the ray intersects the sphere, otherwise `false`.
+ */
+fun hitSphere(
+    center: Point3,
+    radius: Double,
+    ray: Ray,
+): Boolean {
+    val originToCenter = center - ray.origin
+    val a = ray.direction dot ray.direction
+    val b = -2 * (ray.direction dot originToCenter)
+    val c = (originToCenter dot originToCenter) - radius * radius
+    val discriminant = b * b - 4 * a * c
+    return discriminant > 0
+}
+
 fun Ray.color(): Color {
+    if (hitSphere(Point3(0.0, 0.0, -1.0), 0.5, this)) {
+        return Color.RED
+    }
+
     val unitDirection = direction.normalized()
     val a = 0.5 * (unitDirection.y + 1.0)
     return (1 - a) * Color.WHITE + a * Color.BLUE

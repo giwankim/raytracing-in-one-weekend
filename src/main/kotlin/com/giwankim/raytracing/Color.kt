@@ -27,6 +27,7 @@ data class Color(
     companion object {
         val WHITE = Color(1.0, 1.0, 1.0)
         val BLUE = Color(0.5, 0.7, 1.0)
+        val RED = Color(1.0, 0.0, 0.0)
     }
 }
 
