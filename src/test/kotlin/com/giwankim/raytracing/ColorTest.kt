@@ -29,7 +29,7 @@ class ColorTest {
         val a = Color(0.2, 0.3, 0.4)
         val b = Color(0.3, 0.4, 0.5)
 
-        a + b shouldBe Color(0.5, 0.7, 0.9)
+        (a + b) shouldBe Color(0.5, 0.7, 0.9)
     }
 
     @Test
