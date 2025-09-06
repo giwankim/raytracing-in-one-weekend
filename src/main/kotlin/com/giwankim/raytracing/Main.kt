@@ -1,5 +1,7 @@
 package com.giwankim.raytracing
 
+import kotlin.math.sqrt
+
 fun main() {
     // Image
 
@@ -57,35 +59,39 @@ fun main() {
     System.err.println("\rDone.                 ")
 }
 
-/**
- * Tests whether a ray intersects a sphere.
- *
- * Solves the quadratic obtained by substituting the ray `P(t) = origin + t * direction`
- * into the sphere equation `|P - center|^2 = radius^2` and checks the discriminant.
- * Returns `true` if the discriminant \> 0 (two intersections). Tangential hits
- * (discriminant == 0) and misses return `false`. Does not verify that the hit is at `t > 0`.
- *
- * @param center Sphere center in world space.
- * @param radius Sphere radius.
- * @param ray Ray to test.
- * @return `true` if the ray intersects the sphere, otherwise `false`.
- */
 fun hitSphere(
     center: Point3,
     radius: Double,
     ray: Ray,
-): Boolean {
+): Double {
     val originToCenter = center - ray.origin
     val a = ray.direction dot ray.direction
     val b = -2 * (ray.direction dot originToCenter)
     val c = (originToCenter dot originToCenter) - radius * radius
     val discriminant = b * b - 4 * a * c
-    return discriminant > 0
+    return if (discriminant < 0) {
+        -1.0
+    } else {
+        (-b - sqrt(discriminant)) / (2.0 * a)
+    }
 }
 
 fun Ray.color(): Color {
-    if (hitSphere(Point3(0.0, 0.0, -1.0), 0.5, this)) {
-        return Color.RED
+    val t =
+        hitSphere(
+            Point3(0.0, 0.0, -1.0),
+            0.5,
+            this,
+        )
+    if (t > 0.0) {
+        val unitNormal =
+            (at(t) - Vec3(0.0, 0.0, -1.0))
+                .normalized()
+        return Color(
+            0.5 * (unitNormal.x + 1),
+            0.5 * (unitNormal.y + 1),
+            0.5 * (unitNormal.z + 1),
+        )
     }
 
     val unitDirection = direction.normalized()

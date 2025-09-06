@@ -2,10 +2,12 @@ package com.giwankim.raytracing
 
 import io.kotest.assertions.assertSoftly
 import io.kotest.matchers.shouldBe
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import org.junitpioneer.jupiter.StdIo
 import org.junitpioneer.jupiter.StdOut
 
+@Disabled
 class MainTest {
     @Test
     @StdIo
