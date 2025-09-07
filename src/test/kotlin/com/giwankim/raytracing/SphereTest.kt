@@ -1,5 +1,6 @@
 package com.giwankim.raytracing
 
+import io.kotest.assertions.assertSoftly
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 
@@ -38,7 +39,13 @@ class SphereTest {
 
         val hit = sphere.hit(ray, 0.0, Double.POSITIVE_INFINITY)
 
-        hit shouldBe HitRecord(Point3(0, 0, 1), Vec3(0, 0, 1), 4.0)
+        requireNotNull(hit)
+
+        assertSoftly {
+            hit.point shouldBe Point3(0, 0, 1)
+            hit.normal shouldBe Vec3(0, 0, 1)
+            hit.t shouldBe 4.0
+        }
     }
 
     @Test
@@ -48,6 +55,12 @@ class SphereTest {
 
         val hit = sphere.hit(ray, 4.1, Double.POSITIVE_INFINITY)
 
-        hit shouldBe HitRecord(Point3(0, 0, -1), Vec3(0, 0, -1), 6.0)
+        requireNotNull(hit)
+
+        assertSoftly {
+            hit.point shouldBe Point3(0, 0, -1)
+            hit.normal shouldBe -Vec3(0, 0, -1)
+            hit.t shouldBe 6.0
+        }
     }
 }

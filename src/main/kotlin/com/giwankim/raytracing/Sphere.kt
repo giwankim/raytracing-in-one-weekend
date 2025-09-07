@@ -36,6 +36,7 @@ class Sphere(
 
         val point = ray.at(root)
         val normal = (point - center) / radius
-        return HitRecord(point, normal, root)
+
+        return HitRecord.of(point, normal, ray, root)
     }
 }
