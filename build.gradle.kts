@@ -1,17 +1,12 @@
 plugins {
     application
     alias(libs.plugins.kotlin.jvm)
-//    kotlin("jvm") version "2.2.10"
     alias(libs.plugins.ktlint)
 }
 
 group = "com.giwankim"
 version = "1.0-SNAPSHOT"
 description = "Ray Tracing in One Weekend"
-
-repositories {
-    mavenCentral()
-}
 
 dependencies {
     // kotlin-test

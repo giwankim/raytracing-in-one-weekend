@@ -17,7 +17,7 @@ class SphereTest {
         val ray = Ray(Point3(0, 0, 5), Vec3(0, 0, -1))
 
         // tMax is below the near root (4.0)
-        val miss = sphere.hit(ray, 0.0, 3.9)
+        val miss = sphere.hit(ray, Interval(min = 0.0, max = 3.9))
 
         miss shouldBe null
     }
@@ -27,7 +27,7 @@ class SphereTest {
         val sphere = Sphere(Point3.ZERO, 1.0)
         val ray = Ray(Point3(0, 0, 5), Vec3(1, 0, 0))
 
-        val miss = sphere.hit(ray, 0.1, Double.POSITIVE_INFINITY)
+        val miss = sphere.hit(ray, Interval(min = 0.1, max = Double.POSITIVE_INFINITY))
 
         miss shouldBe null
     }
@@ -37,7 +37,7 @@ class SphereTest {
         val sphere = Sphere(Point3.ZERO, 1.0)
         val ray = Ray(Point3(0, 0, 5), Vec3(0, 0, -1))
 
-        val hit = sphere.hit(ray, 0.0, Double.POSITIVE_INFINITY)
+        val hit = sphere.hit(ray, Interval(min = 0.0, max = Double.POSITIVE_INFINITY))
 
         requireNotNull(hit)
 
@@ -53,7 +53,7 @@ class SphereTest {
         val sphere = Sphere(Point3.ZERO, 1.0)
         val ray = Ray(Point3(0, 0, 5), Vec3(0, 0, -1))
 
-        val hit = sphere.hit(ray, 4.1, Double.POSITIVE_INFINITY)
+        val hit = sphere.hit(ray, Interval(min = 4.1, max = Double.POSITIVE_INFINITY))
 
         requireNotNull(hit)
 
