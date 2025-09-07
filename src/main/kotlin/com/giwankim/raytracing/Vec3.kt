@@ -7,6 +7,8 @@ data class Vec3(
     val y: Double = 0.0,
     val z: Double = 0.0,
 ) {
+    constructor(x: Number, y: Number, z: Number) : this(x.toDouble(), y.toDouble(), z.toDouble())
+
     operator fun unaryMinus(): Vec3 = Vec3(-x, -y, -z)
 
     operator fun get(i: Int): Double =
