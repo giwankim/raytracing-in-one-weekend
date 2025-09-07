@@ -10,8 +10,7 @@ class Sphere(
 
     override fun hit(
         ray: Ray,
-        rayTMin: Double,
-        rayTMax: Double,
+        rayT: Interval,
     ): HitRecord? {
         val originToCenter = ray.origin - center
         val a = ray.direction.lengthSquared()
@@ -30,7 +29,7 @@ class Sphere(
             listOf(
                 (-h - sqrtDiscriminant) / a,
                 (-h + sqrtDiscriminant) / a,
-            ).firstOrNull { it > rayTMin && it < rayTMax }
+            ).firstOrNull { rayT.surrounds(it) }
                 ?: return null
         )
 

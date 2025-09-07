@@ -68,7 +68,7 @@ fun main() {
 }
 
 fun Ray.color(world: Hittable): Color {
-    val hit = world.hit(this, 0.0, Double.POSITIVE_INFINITY)
+    val hit = world.hit(this, Interval(0.0, Double.POSITIVE_INFINITY))
     if (hit != null) {
         // components of hit.normal are between -1 and 1.
         // 0.5 * (normal + 1) translates the normal to the range [0,1]

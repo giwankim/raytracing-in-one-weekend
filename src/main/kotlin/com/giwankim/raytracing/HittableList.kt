@@ -11,12 +11,12 @@ class HittableList(
 
     override fun hit(
         ray: Ray,
-        rayTMin: Double,
-        rayTMax: Double,
+        rayT: Interval,
     ): HitRecord? =
         objects.fold(null as HitRecord?) { best, obj ->
-            val closest = best?.t ?: rayTMax
-            obj.hit(ray, rayTMin, closest) ?: best
+            // prunes the search to the closest hit so far
+            val closest = best?.t ?: rayT.max
+            obj.hit(ray, Interval(rayT.min, closest)) ?: best
         }
 }
 

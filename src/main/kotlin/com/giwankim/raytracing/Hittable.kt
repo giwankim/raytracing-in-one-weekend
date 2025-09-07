@@ -25,7 +25,6 @@ class HitRecord private constructor(
 fun interface Hittable {
     fun hit(
         ray: Ray,
-        rayTMin: Double,
-        rayTMax: Double,
+        rayT: Interval,
     ): HitRecord?
 }
