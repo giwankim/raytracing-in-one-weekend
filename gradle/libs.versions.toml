@@ -1,0 +1,17 @@
+[plugins]
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version = "2.2.10" }
+ktlint = { id = "org.jlleitschuh.gradle.ktlint", version = "13.1.0" }
+
+[versions]
+java = "21"
+junit-jupiter = "5.13.4"
+junit-pioneer = "2.3.0"
+kotest = "6.0.2"
+
+[libraries]
+# JUnit 5
+junit-pioneer = { module = "org.junit-pioneer:junit-pioneer", version.ref = "junit-pioneer" }
+junit-jupiterParams = { module = "org.junit.jupiter:junit-jupiter-params", version.ref = "junit-jupiter" }
+
+# Kotest
+kotest = { module = "io.kotest:kotest-runner-junit5", version.ref = "kotest" }

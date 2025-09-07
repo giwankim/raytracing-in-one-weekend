@@ -1,7 +1,8 @@
 plugins {
     application
-    kotlin("jvm") version "2.2.10"
-    id("org.jlleitschuh.gradle.ktlint") version "13.1.0"
+    alias(libs.plugins.kotlin.jvm)
+//    kotlin("jvm") version "2.2.10"
+    alias(libs.plugins.ktlint)
 }
 
 group = "com.giwankim"
@@ -13,14 +14,23 @@ repositories {
 }
 
 dependencies {
+    // kotlin-test
     testImplementation(kotlin("test"))
-    testImplementation("io.kotest:kotest-runner-junit5:6.0.2")
-    testImplementation("org.junit-pioneer:junit-pioneer:2.3.0")
-    testCompileOnly("org.junit.jupiter:junit-jupiter-params:5.13.4")
+
+    // Kotest
+    testImplementation(libs.kotest)
+
+    // JUnit 5
+    testImplementation(libs.junit.pioneer)
+    testCompileOnly(libs.junit.jupiterParams)
 }
 
 kotlin {
-    jvmToolchain(21)
+    jvmToolchain(
+        libs.versions.java
+            .get()
+            .toInt(),
+    )
 }
 
 tasks.withType<Test> {
