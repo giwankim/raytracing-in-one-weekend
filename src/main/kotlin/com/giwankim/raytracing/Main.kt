@@ -1,6 +1,6 @@
 package com.giwankim.raytracing
 
-import kotlin.math.sqrt
+import java.io.Writer
 
 fun main() {
     // Image
@@ -13,6 +13,14 @@ fun main() {
         (imageWidth / aspectRatio)
             .toInt()
             .coerceAtLeast(1)
+
+    // World
+
+    val world =
+        hittableListOf(
+            Sphere(Point3(0, 0, -1), 0.5),
+            Sphere(Point3(0, -100.5, -1), 100.0),
+        )
 
     // Camera
 
@@ -50,7 +58,7 @@ fun main() {
                 val rayDirection = pixelCenter - cameraCenter
                 val ray = Ray(cameraCenter, rayDirection)
 
-                val pixelColor = ray.color()
+                val pixelColor = ray.color(world)
                 pixelColor.write(out)
             }
         }
@@ -59,42 +67,31 @@ fun main() {
     System.err.println("\rDone.                 ")
 }
 
-fun hitSphere(
-    center: Point3,
-    radius: Double,
-    ray: Ray,
-): Double {
-    val originToCenter = center - ray.origin
-    val a = ray.direction.lengthSquared()
-    val h = ray.direction dot originToCenter
-    val c = originToCenter.lengthSquared() - radius * radius
-    val discriminant = h * h - a * c
-    return if (discriminant < 0) {
-        -1.0
-    } else {
-        (h - sqrt(discriminant)) / a
-    }
-}
-
-fun Ray.color(): Color {
-    val t =
-        hitSphere(
-            Point3(0.0, 0.0, -1.0),
-            0.5,
-            this,
-        )
-    if (t > 0.0) {
-        val unitNormal =
-            (at(t) - Vec3(0.0, 0.0, -1.0))
-                .normalized()
+fun Ray.color(world: Hittable): Color {
+    val hit = world.hit(this, 0.0, Double.POSITIVE_INFINITY)
+    if (hit != null) {
+        // components of hit.normal are between -1 and 1.
+        // 0.5 * (normal + 1) translates the normal to the range [0,1]
         return Color(
-            0.5 * (unitNormal.x + 1),
-            0.5 * (unitNormal.y + 1),
-            0.5 * (unitNormal.z + 1),
+            0.5 * (hit.normal.x + 1),
+            0.5 * (hit.normal.y + 1),
+            0.5 * (hit.normal.z + 1),
         )
     }
 
     val unitDirection = direction.normalized()
+    // y component of unitDirection is between -1 and 1, so
+    // a is between 0 and 1.
     val a = 0.5 * (unitDirection.y + 1.0)
     return (1 - a) * Color.WHITE + a * Color.BLUE
+}
+
+fun Color.write(writer: Writer) {
+    // Translate the [0,1] component values to the byte range [0,255].
+    val rByte = (256.0 * r).toInt().coerceAtMost(255)
+    val gByte = (256.0 * g).toInt().coerceAtMost(255)
+    val bByte = (256.0 * b).toInt().coerceAtMost(255)
+
+    // Write out the pixel color components.
+    writer.appendLine("$rByte $gByte $bByte")
 }

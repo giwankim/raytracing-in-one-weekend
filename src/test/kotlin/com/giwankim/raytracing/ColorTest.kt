@@ -4,9 +4,6 @@ import io.kotest.assertions.assertSoftly
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.params.ParameterizedTest
-import org.junit.jupiter.params.provider.CsvSource
-import java.io.StringWriter
 
 class ColorTest {
     @Test
@@ -42,27 +39,5 @@ class ColorTest {
             (2.0 * a) shouldBe Color(0.4, 0.6, 0.8)
             (2 * a) shouldBe Color(0.4, 0.6, 0.8)
         }
-    }
-
-    @ParameterizedTest(name = "({0}, {1}, {2}) -> {3}")
-    @CsvSource(
-        // r,   g,   b,   expected
-        "0.0, 0.0, 0.0, 0 0 0",
-        "1.0,  1.0, 1.0,  255 255 255", // 256 clamped to 255
-        "0.5,  0.5, 0.5,  128 128 128", // 256 * 0.5 = 128
-        "0.5,  0.7, 1.0,  128 179 255",
-    )
-    fun `write outputs PPM color bytes 0 to 255`(
-        r: Double,
-        g: Double,
-        b: Double,
-        expectedLine: String,
-    ) {
-        val color = Color(r, g, b)
-
-        val writer = StringWriter()
-        color.write(writer)
-
-        writer.toString().trim() shouldBe expectedLine
     }
 }

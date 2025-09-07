@@ -1,7 +1,5 @@
 package com.giwankim.raytracing
 
-import java.io.Writer
-
 data class Color(
     val r: Double,
     val g: Double,
@@ -34,13 +32,3 @@ data class Color(
 operator fun Double.times(color: Color): Color = color * this
 
 operator fun Int.times(color: Color): Color = color * this.toDouble()
-
-fun Color.write(writer: Writer) {
-    // Translate the [0,1] component values to the byte range [0,255].
-    val rByte = (256.0 * r).toInt().coerceAtMost(255)
-    val gByte = (256.0 * g).toInt().coerceAtMost(255)
-    val bByte = (256.0 * b).toInt().coerceAtMost(255)
-
-    // Write out the pixel color components.
-    writer.appendLine("$rByte $gByte $bByte")
-}
